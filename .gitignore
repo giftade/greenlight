@@ -1,6 +1,5 @@
 go.mod
 go.sum
 Makefile
-migrations
 bin
 .vscode/
