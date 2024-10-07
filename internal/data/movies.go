@@ -1,23 +1,24 @@
 package data
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/giftade/greenlight/internal/validator"
 )
 
 type Movie struct {
-	ID        int64 `json:"id"`
+	ID        int64     `json:"id"`
 	CreatedAt time.Time `json:"-"`
-	Title     string `json:"title"`
-	Year      int32 `json:"year,omitempty"`
-	Runtime   Runtime `json:"runtime,omitempty"`
-	Genres    []string `json:"genres,omitempty"`
-	Version   int32 `json:"version,omitempty"`
+	Title     string    `json:"title"`
+	Year      int32     `json:"year,omitempty"`
+	Runtime   Runtime   `json:"runtime,omitempty"`
+	Genres    []string  `json:"genres,omitempty"`
+	Version   int32     `json:"version,omitempty"`
 }
 
-func ValidateMovie (v *validator.Validator, movie *Movie){
-	
+func ValidateMovie(v *validator.Validator, movie *Movie) {
+
 	v.Check(movie.Title != "", "title", "must be provided")
 	v.Check(len(movie.Title) <= 500, "title", "must not be less than 500 bytes long")
 
@@ -34,4 +35,25 @@ func ValidateMovie (v *validator.Validator, movie *Movie){
 
 	v.Check(validator.Unique(movie.Genres), "genres", "must not contain duplicate values")
 
+}
+
+type MovieModel struct {
+	DB *sql.DB
+}
+
+
+func(m MovieModel) Insert(movie *Movie) error {
+	return nil
+}
+
+func(m MovieModel) Get(id int64) (*Movie, error){
+	return nil, nil
+}
+
+func(m MovieModel) Update(movie *Movie) error{
+	return nil
+}
+
+func(m MovieModel) Delete(id int64) error{
+	return nil
 }
