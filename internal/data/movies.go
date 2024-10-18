@@ -93,7 +93,7 @@ func (m MovieModel) Update(movie *Movie) error {
 
 	args := []interface{}{movie.Title, movie.Year, movie.Runtime, pq.Array(movie.Genres), movie.ID, movie.Version}
 
-	err :=  m.DB.QueryRow(query, args...).Scan(movie.Version)
+	err :=  m.DB.QueryRow(query, args...).Scan(&movie.Version)
 	if err != nil {
 		switch {
 		case errors.Is(err, sql.ErrNoRows):
