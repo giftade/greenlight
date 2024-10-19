@@ -78,7 +78,7 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst int
 			return fmt.Errorf("body contains unknown key %s", fieldName)
 
 		case err.Error() == "http: request body too large":
-			return fmt.Errorf("body must not be larger than %d bytes", maxBytes)	
+			return fmt.Errorf("body must not be larger than %d bytes", maxBytes)
 
 		case errors.As(err, &invalidUnmarshalError):
 			panic(err)
@@ -90,7 +90,7 @@ func (app *application) readJSON(w http.ResponseWriter, r *http.Request, dst int
 
 	}
 	err = dec.Decode(&struct{}{})
-	if err!= io.EOF {
+	if err != io.EOF {
 		return errors.New("body must only contain a single JSON value")
 	}
 
@@ -106,13 +106,13 @@ func (app *application) readString(qs url.Values, key, defaultValue string) stri
 	return s
 }
 
-func (app *application) readCSV(qs url.Values, key string, defaultValue []string) []string  {
+func (app *application) readCSV(qs url.Values, key string, defaultValue []string) []string {
 	csv := qs.Get(key)
 
 	if csv == "" {
 		return defaultValue
 	}
-	return strings.Split(csv,",")
+	return strings.Split(csv, ",")
 }
 func (app *application) readInt(qs url.Values, key string, defaultValue int, v *validator.Validator) int {
 	s := qs.Get(key)
@@ -120,7 +120,7 @@ func (app *application) readInt(qs url.Values, key string, defaultValue int, v *
 	if s == "" {
 		return defaultValue
 	}
-	i,err := strconv.Atoi(s)
+	i, err := strconv.Atoi(s)
 	if err != nil {
 		v.AddError(key, "must be an integer value")
 		return defaultValue
